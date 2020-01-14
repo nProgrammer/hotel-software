@@ -8,6 +8,23 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
+<script>
+  function postLogin() {
+    const log = document.getElementById("login").value;
+    return log;
+  }
+  function postPass() {
+    const pass = document.getElementById("pass").value;
+    return pass;
+  }
+  function createQuery() {
+    const password = postPass();
+    const login = postLogin();
+    window.location.href = 'http://localhost:8000/hello?login=' + login + "&password=" + password;
+  }
+</script>
+<center>
   <app-root></app-root>
+</center>
 </body>
 </html>
