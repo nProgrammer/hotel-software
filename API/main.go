@@ -1,24 +1,32 @@
 package main
 
 import (
+	"API/Controller"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/subosito/gotenv"
 	"log"
 	"net/http"
+	"os"
 )
 
+func init() {
+	gotenv.Load()
+}
+
 func main() {
+	userLogin := os.Getenv("USER_LOGIN")
+	fmt.Println(userLogin)
+	userPassword := os.Getenv("USER_PASSWORD")
+	fmt.Println(userPassword)
+
+	user := userLogin + " " + userPassword
+
 	router := mux.NewRouter()
 
-	router.HandleFunc("/hello", hello)
+	router.HandleFunc("/login", Controller.Login(user))
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	login := r.URL.Query()["login"][0]
-	password := r.URL.Query()["password"][0]
-	user := login + " " + password
-	w.Header().Add("Content-Type", "text/plain")
-	fmt.Fprintf(w, user)
-}
+
