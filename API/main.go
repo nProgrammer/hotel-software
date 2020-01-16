@@ -19,12 +19,14 @@ func main() {
 	fmt.Println(userLogin)
 	userPassword := os.Getenv("USER_PASSWORD")
 	fmt.Println(userPassword)
+	token := os.Getenv("USER_TOKEN")
+	fmt.Println(token)
 
 	user := userLogin + " " + userPassword
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/login", Controller.Login(user))
+	router.HandleFunc("/login", Controller.Login(user, token))
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
