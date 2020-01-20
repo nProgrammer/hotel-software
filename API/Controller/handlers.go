@@ -12,8 +12,8 @@ func Login(user1 string, token string) http.HandlerFunc {
 		user := login + " " + password
 		fmt.Println(user)
 		if user == user1 {
-			http.Redirect(w, r, "http://localhost:3000/" + token, http.StatusSeeOther)
-		}else{
+			http.Redirect(w, r, "http://localhost:3000/logged.html"+token, http.StatusSeeOther)
+		} else {
 			http.Redirect(w, r, "http://localhost:3000/", http.StatusSeeOther)
 		}
 	}
