@@ -26,28 +26,7 @@
         const password = postPass();
         const login = postLogin();
         window.location.href = 'http://localhost:8000/login?login=' + login + "&password=" + password;
-      }
-
-      const url = window.location.href;
-      fullUrl = "";
-      for(let i=22; i < 109; i++) {
-        fullUrl = fullUrl + url[i]
-      }
-
-      function IsLogged() {
-        console.log(fullUrl);
-      }
-
-      function login() {
-        IsLogged();
-        if(fullUrl === "2984729834hib2431uv5092375295372938ujh3bujh3vb421huj42u34b4ij2nb34kjn23ji4IDJHBNW92842n") {
-          console.log("........LOGGED........");
-          window.location.href = 'http://localhost:3000/logged.html';
-        }
-      }
-
-      window.onload = login;
-    </script>
+      }</script>
   </head>
   <body bgcolor="#8b4513">
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -55,7 +34,7 @@
       <center>
         <div style="background-color: rgba(255,255,255,0.1); border-radius: 20px; padding-bottom: 20px; margin-left: 800px; margin-right: 780px;">
           <div id="root" style="margin-top: 45vh;"></div>
-          <button onclick="CreateQuery()" style="margin-left: 10px; margin-bottom: 10px;">LOG IN</button>
+          <button onclick="CreateQuery()" style="margin-left: 10px; margin-bottom: 10px; margin-right: 10px;">LOG IN</button>
         </div>
       </center>
     </article>
