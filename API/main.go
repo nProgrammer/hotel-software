@@ -21,14 +21,14 @@ func main() {
 	fmt.Println(userPassword)
 	token := os.Getenv("USER_TOKEN")
 	fmt.Println(token)
+	url := os.Getenv("HOST_URL")
+	fmt.Println(url)
 
 	user := userLogin + " " + userPassword
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/login", Controller.Login(user, token))
+	router.HandleFunc("/login", Controller.Login(user, token, url))
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
-
-
