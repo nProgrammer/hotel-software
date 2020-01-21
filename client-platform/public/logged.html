@@ -3,8 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+        function postClientRegName() {
+            const nameR = document.getElementById("nameR").value;
+            return nameR
+        }
+        function postClientRegSName() {
+            const snameR = document.getElementById("snameR").value;
+            return snameR
+        }
+        function postClientRegSN() {
+            const snR =  document.getElementById("snR").value;
+            return snR
+        }
+        function postClientDelSN() {
+            const snD =  document.getElementById("snD").value;
+            return snD
+        }
+        function CreateQueryRegisterClient() {
+            const nameR = postClientRegName();
+            const snameR = postClientRegSName();
+            const snR = postClientRegSN();
+            if (snR.length === 9) {
+                window.location.href = 'http://localhost:8000/register-client?name=' + nameR + "&surname=" + snameR + "&sn=" + snR;
+            } else if (snR < 9) {
+                document.getElementById("errorR").innerHTML = "TO SHORT SERIAL NUMBER";
+            } else {
+                document.getElementById("errorR").innerHTML = "TO LONG SERIAL NUMBER";
+            }
+        }
+        function CreateQueryDelClient() {
+            const snR = postClientDelSN();
+            window.location.href = 'http://localhost:8000/delete-client?sn=' + snR;
+        }
+    </script>
 </head>
 <body>
-
+    <article style="margin-right: 5vw; display: inline-block; float: right;">
+        <div>
+            <h3>List of clients: </h3>
+            <iframe style="height: 90vh" src="http://localhost:8000/show-clients"></iframe>
+        </div>
+    </article>
+    <center>
+        <main style="display: inline-block; margin-top: 20vh;">
+            REGISTER CLIENT: <br><br>
+            <div style="margin-left: 0px;"><input type="text" placeholder="Client name" id="nameR"> <br><br>
+            <input type="text" placeholder="Client surname" id="snameR"> <br><br>
+            <input type="password" placeholder="Client S/N" id="snR"><br><br>
+            <button onclick="CreateQueryRegisterClient()">REGISTER</button>
+                <p id="errorR" style="color: red;"></p>
+            </div>
+        </main>
+        <section style="margin-top: 10vh;">
+            DELETE CLIENT: <br><br>
+            <input type="text" placeholder="Client S/N" id="snD"><br><br>
+            <button onclick="CreateQueryDelClient()">DELETE</button>
+        </section>
+    </center>
 </body>
 </html>

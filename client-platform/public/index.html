@@ -13,7 +13,6 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>React App</title>
     <script>
-
       function postLogin() {
         const log = document.getElementById("login").value;
         return log;
@@ -22,11 +21,12 @@
         const pass = document.getElementById("pass").value;
         return pass;
       }
-      function CreateQuery() {
+      function CreateQueryLogin() {
         const password = postPass();
         const login = postLogin();
         window.location.href = 'http://localhost:8000/login?login=' + login + "&password=" + password;
-      }</script>
+      }
+    </script>
   </head>
   <body bgcolor="#8b4513">
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -34,7 +34,7 @@
       <center>
         <div style="background-color: rgba(255,255,255,0.1); border-radius: 20px; padding-bottom: 20px; margin-left: 800px; margin-right: 780px;">
           <div id="root" style="margin-top: 45vh;"></div>
-          <button onclick="CreateQuery()" style="margin-left: 10px; margin-bottom: 10px; margin-right: 10px;">LOG IN</button>
+          <button onclick="CreateQueryLogin()" style="margin-left: 10px; margin-bottom: 10px; margin-right: 10px;">LOG IN</button>
         </div>
       </center>
     </article>

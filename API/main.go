@@ -2,33 +2,33 @@ package main
 
 import (
 	"API/Controller"
-	"fmt"
+	"database/sql"
 	"github.com/gorilla/mux"
 	"github.com/subosito/gotenv"
 	"log"
 	"net/http"
-	"os"
 )
 
 func init() {
 	gotenv.Load()
 }
 
+var db *sql.DB
+
 func main() {
-	userLogin := os.Getenv("USER_LOGIN")
-	fmt.Println(userLogin)
-	userPassword := os.Getenv("USER_PASSWORD")
-	fmt.Println(userPassword)
-	token := os.Getenv("USER_TOKEN")
-	fmt.Println(token)
-	url := os.Getenv("HOST_URL")
-	fmt.Println(url)
+
+	userLogin, userPassword, url, dbUrl := Controller.ConfigureEnvironmentVar()
+
+	db = Controller.DbCfg(db, dbUrl)
 
 	user := userLogin + " " + userPassword
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/login", Controller.Login(user, token, url))
+	router.HandleFunc("/login", Controller.Login(user, url))
+	router.HandleFunc("/register-client", Controller.RegisterClient(db, url))
+	router.HandleFunc("/show-clients", Controller.GetClients(db, url))
+	router.HandleFunc("/delete-client", Controller.DeleteClient(db, url))
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
