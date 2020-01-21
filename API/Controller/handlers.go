@@ -23,23 +23,27 @@ func Login(user1 string, url string) http.HandlerFunc {
 	}
 }
 
-func RegisterClient(db *sql.DB, url string) http.HandlerFunc {
+func RegisterClient(db *sql.DB, url string, passM string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		nameR := r.URL.Query()["name"][0]
 		snameR := r.URL.Query()["surname"][0]
 		snR := r.URL.Query()["sn"][0]
+		passMR := r.URL.Query()["passM"][0]
 
-		var client Model.Client
+		if passMR == passM {
+			var client Model.Client
 
-		client.Name = nameR
-		client.Surname = snameR
-		client.Sn = snR
+			client.Name = nameR
+			client.Surname = snameR
+			client.Sn = snR
 
-		json.NewDecoder(r.Body).Decode(&client)
+			json.NewDecoder(r.Body).Decode(&client)
 
-		_ = db.QueryRow("insert into clients (name, sname, sn) values($1, $2, $3);", client.Name, client.Surname, client.Sn)
-		http.Redirect(w, r, url+"logged.html", http.StatusSeeOther)
-		json.NewEncoder(w).Encode(client)
+			_ = db.QueryRow("insert into clients (name, sname, sn) values($1, $2, $3);", client.Name, client.Surname, client.Sn)
+			http.Redirect(w, r, url+"logged.html", http.StatusSeeOther)
+		} else {
+			http.Redirect(w, r, url+"logged.html?error=wrong-manager-pass", http.StatusSeeOther)
+		}
 	}
 }
 
@@ -59,12 +63,17 @@ func GetClients(db *sql.DB, url string) http.HandlerFunc {
 	}
 }
 
-func DeleteClient(db *sql.DB, url string) http.HandlerFunc {
+func DeleteClient(db *sql.DB, url string, passMD string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		snD := r.URL.Query()["sn"][0]
-		result, _ := db.Exec("delete from clients where sn=$1", snD)
-		rowsUpdated, _ := result.RowsAffected()
-		fmt.Println(rowsUpdated)
-		http.Redirect(w, r, url+"logged.html", http.StatusSeeOther)
+		passM := r.URL.Query()["passM"][0]
+		if passM == passMD {
+			result, _ := db.Exec("delete from clients where sn=$1", snD)
+			rowsUpdated, _ := result.RowsAffected()
+			fmt.Println(rowsUpdated)
+			http.Redirect(w, r, url+"logged.html", http.StatusSeeOther)
+		} else {
+			http.Redirect(w, r, url+"logged.html?error=wrong-manager-passD", http.StatusSeeOther)
+		}
 	}
 }

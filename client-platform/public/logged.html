@@ -16,6 +16,14 @@
             const snR =  document.getElementById("snR").value;
             return snR
         }
+        function postClientRegPassM() {
+            const passMR =  document.getElementById("passMR").value;
+            return passMR
+        }
+        function postClientDelPassM() {
+            const passMD =  document.getElementById("passMD").value;
+            return passMD
+        }
         function postClientDelSN() {
             const snD =  document.getElementById("snD").value;
             return snD
@@ -24,8 +32,9 @@
             const nameR = postClientRegName();
             const snameR = postClientRegSName();
             const snR = postClientRegSN();
+            const passM = postClientRegPassM();
             if (snR.length === 9) {
-                window.location.href = 'http://localhost:8000/register-client?name=' + nameR + "&surname=" + snameR + "&sn=" + snR;
+                window.location.href = 'http://localhost:8000/register-client?name=' + nameR + "&surname=" + snameR + "&sn=" + snR + "&passM=" + passM;
             } else if (snR < 9) {
                 document.getElementById("errorR").innerHTML = "TO SHORT SERIAL NUMBER";
             } else {
@@ -33,9 +42,32 @@
             }
         }
         function CreateQueryDelClient() {
-            const snR = postClientDelSN();
-            window.location.href = 'http://localhost:8000/delete-client?sn=' + snR;
+            const snD = postClientDelSN();
+            const passD = postClientDelPassM();
+            window.location.href = 'http://localhost:8000/delete-client?sn=' + snD + "&passM=" + passD;
         }
+        function checkErrorPassM() {
+            const url = window.location.href;
+            const errorMessage = url[40] + url[41] + url[42] + url[43] + url[44] + url[45] + url[46] + url[47] + url[48] + url[49] + url[50] + url[51] + url[52] + url[53] + url[54] + url[55] + url[56] + url[57] + url[58];
+            console.log(errorMessage);
+            if (errorMessage === "wrong-manager-passundefined") {
+                document.getElementById("errorR").innerHTML = "WRONG MANAGER'S PASSWORD";
+            }
+        }
+        function checkErrorPassMD() {
+            const url = window.location.href;
+            const errorMessage = url[40] + url[41] + url[42] + url[43] + url[44] + url[45] + url[46] + url[47] + url[48] + url[49] + url[50] + url[51] + url[52] + url[53] + url[54] + url[55] + url[56] + url[57] + url[58];
+            console.log(errorMessage);
+            if (errorMessage === "wrong-manager-passD") {
+                document.getElementById("errorRD").innerHTML = "WRONG MANAGER'S PASSWORD";
+            }
+        }
+        function checkP() {
+            checkErrorPassM()
+            checkErrorPassMD()
+        }
+
+        window.onload = checkP;
     </script>
 </head>
 <body>
@@ -51,6 +83,7 @@
             <div style="margin-left: 0px;"><input type="text" placeholder="Client name" id="nameR"> <br><br>
             <input type="text" placeholder="Client surname" id="snameR"> <br><br>
             <input type="password" placeholder="Client S/N" id="snR"><br><br>
+            <input type="password" placeholder="Manager's password" id="passMR"><br><br>
             <button onclick="CreateQueryRegisterClient()">REGISTER</button>
                 <p id="errorR" style="color: red;"></p>
             </div>
@@ -58,7 +91,9 @@
         <section style="margin-top: 10vh;">
             DELETE CLIENT: <br><br>
             <input type="text" placeholder="Client S/N" id="snD"><br><br>
+            <input type="password" placeholder="Manager's password" id="passMD"><br><br>
             <button onclick="CreateQueryDelClient()">DELETE</button>
+                <p id="errorRD" style="color: red;"></p>
         </section>
     </center>
 </body>

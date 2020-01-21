@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func ConfigureEnvironmentVar() (string, string, string, string) {
+func ConfigureEnvironmentVar() (string, string, string, string, string) {
 	userLogin := os.Getenv("USER_LOGIN")
 	fmt.Println(userLogin)
 	userPassword := os.Getenv("USER_PASSWORD")
@@ -14,6 +14,8 @@ func ConfigureEnvironmentVar() (string, string, string, string) {
 	fmt.Println(url)
 	dbUrl := os.Getenv("DB_URL")
 	fmt.Println(dbUrl)
+	passM := os.Getenv("MANAGER_PASSWORD")
+	fmt.Println(passM)
 
-	return userLogin, userPassword, url, dbUrl
+	return userLogin, userPassword, url, dbUrl, passM
 }

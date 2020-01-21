@@ -17,7 +17,7 @@ var db *sql.DB
 
 func main() {
 
-	userLogin, userPassword, url, dbUrl := Controller.ConfigureEnvironmentVar()
+	userLogin, userPassword, url, dbUrl, passM := Controller.ConfigureEnvironmentVar()
 
 	db = Controller.DbCfg(db, dbUrl)
 
@@ -26,9 +26,9 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/login", Controller.Login(user, url))
-	router.HandleFunc("/register-client", Controller.RegisterClient(db, url))
+	router.HandleFunc("/register-client", Controller.RegisterClient(db, url, passM))
 	router.HandleFunc("/show-clients", Controller.GetClients(db, url))
-	router.HandleFunc("/delete-client", Controller.DeleteClient(db, url))
+	router.HandleFunc("/delete-client", Controller.DeleteClient(db, url, passM))
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
