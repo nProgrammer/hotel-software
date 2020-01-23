@@ -8,3 +8,9 @@ written in plain text format.
 - `DB_URL=postgres://whbmdhoo:HbKTACofj3_0a9nCbyThdTSNpm34QWwv@rajje.db.elephantsql.com:5432/whbmdhoo` replace `postgres://whbmdhoo:HbKTACofj3_0a9nCbyThdTSNpm34QWwv@rajje.db.elephantsql.com:5432/whbmdhoo:`
 with your own postgres DB url
 - `MANAGER_PASSWORD=mpassword` replace `mpassword` with your own password for manager account
+
+# How to start API
+You have to download `go` compiler and after this write 3 commands:
+- `export GO111MODULE=on`
+- `go build -o ./bin/API`
+- `sudo ./bin/API`
