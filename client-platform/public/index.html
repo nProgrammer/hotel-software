@@ -25,7 +25,7 @@
       function CreateQueryLogin() {
         const password = postPass();
         const login = postLogin();
-        window.location.href = ApiURL + 'login?login=' + login + "&password=" + password;
+        window.location.href = ApiURL + 'login?login=' + login + "&password=" + password + "&token=" + TOKEN;
       }
     </script>
   </head>
