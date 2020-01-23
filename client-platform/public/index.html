@@ -12,6 +12,7 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>React App</title>
+    <script src="config.js"></script>
     <script>
       function postLogin() {
         const log = document.getElementById("login").value;
@@ -24,7 +25,7 @@
       function CreateQueryLogin() {
         const password = postPass();
         const login = postLogin();
-        window.location.href = 'http://localhost:8000/login?login=' + login + "&password=" + password;
+        window.location.href = ApiURL + 'login?login=' + login + "&password=" + password;
       }
     </script>
   </head>
