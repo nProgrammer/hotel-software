@@ -45,7 +45,7 @@
             const car = postClientRegCarID();
             const passM = postClientRegPassM();
             if (snR.length === 9) {
-                window.location.href = 'http://localhost:8000/register-client?name=' + nameR + "&surname=" + snameR + "&sn=" + snR + "&roomN=" + room + "&carId=" + car + "&passM=" + passM;
+                window.location.href = ApiURL + 'register-client?name=' + nameR + "&surname=" + snameR + "&sn=" + snR + "&roomN=" + room + "&carId=" + car + "&passM=" + passM;
             } else if (snR < 9) {
                 document.getElementById("errorR").innerHTML = "TO SHORT SERIAL NUMBER";
             } else {
@@ -55,7 +55,7 @@
         function CreateQueryDelClient() {
             const snD = postClientDelSN();
             const passD = postClientDelPassM();
-            window.location.href = 'http://localhost:8000/delete-client?sn=' + snD + "&passM=" + passD;
+            window.location.href = ApiURL + 'delete-client?sn=' + snD + "&passM=" + passD;
         }
         function iframeConfig() {
             document.getElementById("clientScreen").innerHTML ='<iframe style="height: 90vh" src="' + ApiURL + 'show-clients' + '"></iframe>';
