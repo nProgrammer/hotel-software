@@ -12,6 +12,13 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>React App</title>
+    <style>
+      #main{
+        align-items: center;
+        width: 260px;
+        padding: 20px;
+      }
+    </style>
     <script src="config.js"></script>
     <script>
       function postLogin() {
@@ -33,9 +40,17 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <article id="main1">
       <center>
-        <div style="background-color: rgba(255,255,255,0.1); border-radius: 20px; padding-bottom: 20px; margin-left: 800px; margin-right: 780px;">
-          <div id="root" style="margin-top: 45vh;"></div>
-          <button onclick="CreateQueryLogin()" style="margin-left: 10px; margin-bottom: 10px; margin-right: 10px;">LOG IN</button>
+        <div style="background-color: rgba(255,255,255,0.1); width: 30vw; border-radius: 20px; padding-bottom: 20px; margin-left: 20vw; margin-right: 20vw; margin-top: 40vh;">
+            <div id="main">
+              <input type="text" placeholder="USERNAME LOGIN" id="login" style="width: 60%; text-align: center;"/>
+              <br/>
+              <br/>
+              <input type="password" placeholder="PASSWORD" id="pass" style="width: 60%; text-align: center;"/>
+              <br/>
+              <br/>
+            </div>
+          <button onclick="CreateQueryLogin()" style="margin-left: 10px;">LOG IN</button>
+        </div>
         </div>
       </center>
     </article>
