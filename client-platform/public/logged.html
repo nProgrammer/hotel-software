@@ -14,24 +14,26 @@
         </div>
     </article>
     <center>
-        <main style="display: inline-block; margin-top: 20vh;">
-            SIGN UP CLIENT: <br><br>
-            <div style="margin-left: 0px;"><input type="text" placeholder="Client name" id="nameR"> <br><br>
-            <input type="text" placeholder="Client surname" id="snameR"> <br><br>
-            <input type="password" placeholder="Client S/N" id="snR"><br><br>
-            <input type="text" placeholder="Room number" id="roomNumberR"><br><br>
-            <input type="text" placeholder="Car ID" id="carIDR"><br><br>
-            <input type="password" placeholder="Manager's password" id="passMR"><br><br>
-            <button onclick="CreateQueryRegisterClient()">REGISTER</button>
-                <p id="errorR" style="color: red;"></p>
-            </div>
-        </main>
-        <section style="margin-top: 10vh;">
-            RENEGE CLIENT: <br><br>
-            <input type="text" placeholder="Client S/N" id="snD"><br><br>
-            <input type="password" placeholder="Manager's password" id="passMD"><br><br>
-            <button onclick="CreateQueryDelClient()">RENEGE</button>
-        </section>
+        <div style="display: inline-block;">
+            <main style="display: inline-block; margin-top: 20vh;">
+                SIGN UP CLIENT: <br><br>
+                <div style="margin-left: 0px;"><input type="text" placeholder="Client name" id="nameR"> <br><br>
+                <input type="text" placeholder="Client surname" id="snameR"> <br><br>
+                <input type="password" placeholder="Client S/N" id="snR"><br><br>
+                <input type="text" placeholder="Room number" id="roomNumberR"><br><br>
+                <input type="text" placeholder="Car ID" id="carIDR"><br><br>
+                <input type="password" placeholder="Manager's password" id="passMR"><br><br>
+                <button onclick="CreateQueryRegisterClient()">REGISTER</button>
+                    <p id="errorR" style="color: red;"></p>
+                </div>
+            </main>
+            <section style="margin-top: 10vh;">
+                RENEGE CLIENT: <br><br>
+                <input type="text" placeholder="Client S/N" id="snD"><br><br>
+                <input type="password" placeholder="Manager's password" id="passMD"><br><br>
+                <button onclick="CreateQueryDelClient()">RENEGE</button>
+            </section>
+        </div>
     </center>
 </body>
 </html>
