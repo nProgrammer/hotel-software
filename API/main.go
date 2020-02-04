@@ -32,4 +32,5 @@ func main() {
 	router.HandleFunc("/delete-client", Controller.DeleteClient(db, url, passM))
 
 	log.Fatal(http.ListenAndServe(":8000", router))
+
 }
