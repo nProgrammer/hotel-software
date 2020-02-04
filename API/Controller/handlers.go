@@ -53,7 +53,7 @@ func RegisterClient(db *sql.DB, url string, passM string) http.HandlerFunc {
 	}
 }
 
-func GetClients(db *sql.DB, url string) http.HandlerFunc {
+func GetClients(db *sql.DB, aUrl string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var client Model.Client
 		rows, _ := db.Query("select * from clients")
@@ -63,7 +63,7 @@ func GetClients(db *sql.DB, url string) http.HandlerFunc {
 			rows.Scan(&client.Name, &client.Surname, &client.Sn, &client.RoomNumber, &client.CarID)
 			is := strconv.Itoa(i)
 			w.Header().Add("Content-Type", "html")
-			fmt.Fprintf(w, View.ShowClients(client.Name, client.Surname, client.Sn, is))
+			fmt.Fprintf(w, View.ShowClients(client.Name, client.Surname, client.Sn, is, aUrl))
 			i++
 		}
 	}
