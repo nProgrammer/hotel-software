@@ -26,10 +26,10 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/login", Controller.Login(user, url, token))
-	router.HandleFunc("/register-client", Controller.RegisterClient(db, url, passM))
-	router.HandleFunc("/show-clients", Controller.GetClients(db, aUrl))
-	router.HandleFunc("/show-client", Controller.ShowClient(db))
-	router.HandleFunc("/delete-client", Controller.DeleteClient(db, url, passM))
+	router.HandleFunc("/register-client", Controller.RegisterClient(db, url, passM, token))
+	router.HandleFunc("/show-clients", Controller.GetClients(db, aUrl, token))
+	router.HandleFunc("/show-client", Controller.ShowClient(db, token))
+	router.HandleFunc("/delete-client", Controller.DeleteClient(db, url, passM, token))
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 

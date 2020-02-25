@@ -38,7 +38,7 @@ function CreateQueryRegisterClient() {
     const car = postClientRegCarID();
     const passM = postClientRegPassM();
     if (snR.length === 9) {
-        window.location.href = ApiURL + 'register-client?name=' + nameR + "&surname=" + snameR + "&sn=" + snR + "&roomN=" + room + "&carId=" + car + "&passM=" + passM;
+        window.location.href = ApiURL + 'register-client?name=' + nameR + "&surname=" + snameR + "&sn=" + snR + "&roomN=" + room + "&carId=" + car + "&passM=" + passM + "&token=" + TOKEN;
     } else if (snR < 9) {
         document.getElementById("errorR").innerHTML = "TO SHORT SERIAL NUMBER";
     } else {
@@ -48,10 +48,10 @@ function CreateQueryRegisterClient() {
 function CreateQueryDelClient() {
     const snD = postClientDelSN();
     const passD = postClientDelPassM();
-    window.location.href = ApiURL + 'delete-client?sn=' + snD + "&passM=" + passD;
+    window.location.href = ApiURL + 'delete-client?sn=' + snD + "&passM=" + passD + "&token=" + TOKEN;
 }
 function iframeConfig() {
-    document.getElementById("clientScreen").innerHTML ='<iframe style="height: 90vh" src="' + ApiURL + 'show-clients' + '"></iframe>';
+    document.getElementById("clientScreen").innerHTML ='<iframe style="height: 90vh" src="' + ApiURL + 'show-clients' + "?token=" + TOKEN + '"></iframe>';
 }
 function doE() {
     iframeConfig();
