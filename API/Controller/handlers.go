@@ -9,8 +9,14 @@ import (
 	"net/http"
 )
 
+
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func Login(userL string, userP string, token string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w)
 		tokenU := r.URL.Query()["token"][0]
 		var user Model.ClientLogin
 		json.NewDecoder(r.Body).Decode(&user)

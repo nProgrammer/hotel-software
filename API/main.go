@@ -23,7 +23,7 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.HandleFunc("/login", Controller.Login(userLogin, userPassword, token))
+	router.HandleFunc("/login", Controller.Login(userLogin, userPassword, token)).Methods("POST")
 	router.HandleFunc("/register-client", Controller.RegisterClient(db, passM, token))
 	router.HandleFunc("/show-clients", Controller.GetClients(db, token)).Methods("GET")
 	router.HandleFunc("/show-client", Controller.ShowClient(db, token))
