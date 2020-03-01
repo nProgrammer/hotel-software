@@ -9,16 +9,8 @@ import (
 	"net/http"
 )
 
-func EnableCors(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE")
-	(*w).Header().Set("Access-Control-Allow-Headers", "*")
-	(*w).Header().Set("Access-Control-Allow-Credentials", "true")
-}
-
 func Login(userL string, userP string, token string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		EnableCors(&w)
 		tokenU := r.URL.Query()["token"][0]
 		var user Model.ClientLogin
 		json.NewDecoder(r.Body).Decode(&user)
@@ -66,7 +58,6 @@ func RegisterClient(db *sql.DB, passM string, token string) http.HandlerFunc {
 
 func GetClients(db *sql.DB, token string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		EnableCors(&w)
 		tokenU := r.URL.Query()["token"][0]
 		if tokenU == token {
 			var client Model.Client
