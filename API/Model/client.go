@@ -7,3 +7,13 @@ type Client struct {
 	RoomNumber string `json:"room"`
 	CarID      string `json:"carID"`
 }
+
+type ClientDel struct {
+	Sn    string `json:"sn"`
+	Passm string `json:"passm"`
+}
+
+type ClientLogin struct {
+	Login string `json:"login"`
+	Pass  string `json:"pass"`
+}

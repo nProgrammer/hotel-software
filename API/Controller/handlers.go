@@ -2,30 +2,36 @@ package Controller
 
 import (
 	"API/Model"
-	"API/View"
+	"API/Utils"
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 )
 
-func Login(user1 string, url string, token string) http.HandlerFunc {
+func EnableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE")
+	(*w).Header().Set("Access-Control-Allow-Headers", "*")
+	(*w).Header().Set("Access-Control-Allow-Credentials", "true")
+}
+
+func Login(userL string, userP string, token string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		login := r.URL.Query()["login"][0]
-		password := r.URL.Query()["password"][0]
+		EnableCors(&w)
 		tokenU := r.URL.Query()["token"][0]
-		user := login + " " + password
+		var user Model.ClientLogin
+		json.NewDecoder(r.Body).Decode(&user)
 		fmt.Println(user)
-		if user == user1 && tokenU == token {
-			http.Redirect(w, r, url+"logged.html", http.StatusSeeOther)
+		if user.Login == userL && user.Pass == userP && tokenU == token {
+			json.NewEncoder(w).Encode(Utils.LoginU("SUCCESS"))
 		} else {
-			http.Redirect(w, r, url, http.StatusSeeOther)
+			json.NewEncoder(w).Encode(Utils.LoginU("NOT SUCCESS"))
 		}
 	}
 }
 
-func RegisterClient(db *sql.DB, url string, passM string, token string) http.HandlerFunc {
+func RegisterClient(db *sql.DB, passM string, token string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		nameR := r.URL.Query()["name"][0]
 		snameR := r.URL.Query()["surname"][0]
@@ -48,9 +54,9 @@ func RegisterClient(db *sql.DB, url string, passM string, token string) http.Han
 				json.NewDecoder(r.Body).Decode(&client)
 
 				_ = db.QueryRow("insert into clients (name, sname, sn, room, carid) values($1, $2, $3, $4, $5);", client.Name, client.Surname, client.Sn, client.RoomNumber, client.CarID)
-				http.Redirect(w, r, url+"logged.html", http.StatusSeeOther)
+				json.NewEncoder(w).Encode(client)
 			} else {
-				http.Redirect(w, r, url+"logged.html", http.StatusSeeOther)
+				json.NewEncoder(w).Encode("WRONG MANAGER PASSWORD")
 			}
 		} else {
 			fmt.Fprintf(w, "Bad token verification")
@@ -58,43 +64,44 @@ func RegisterClient(db *sql.DB, url string, passM string, token string) http.Han
 	}
 }
 
-func GetClients(db *sql.DB, aUrl string, token string) http.HandlerFunc {
+func GetClients(db *sql.DB, token string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		EnableCors(&w)
 		tokenU := r.URL.Query()["token"][0]
 		if tokenU == token {
 			var client Model.Client
+			var clients []Model.Client
 			rows, _ := db.Query("select * from clients")
 			defer rows.Close()
 			i := 1
 			for rows.Next() {
 				rows.Scan(&client.Name, &client.Surname, &client.Sn, &client.RoomNumber, &client.CarID)
-				is := strconv.Itoa(i)
-				w.Header().Add("Content-Type", "html")
-				fmt.Fprintf(w, View.ShowClients(client.Name, client.Surname, client.Sn, is, aUrl, tokenU))
+				clients = append(clients, client)
 				i++
 			}
+			json.NewEncoder(w).Encode(clients)
 		} else {
-			fmt.Fprintf(w, "Bad token verification")
+			json.NewEncoder(w).Encode("BAD TOKEN VERIFICATION")
 		}
 	}
 }
 
-func DeleteClient(db *sql.DB, url string, passMD string, token string) http.HandlerFunc {
+func DeleteClient(db *sql.DB, passMD string, token string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		snD := r.URL.Query()["sn"][0]
-		passM := r.URL.Query()["passM"][0]
+		var clientJ Model.ClientDel
+		json.NewDecoder(r.Body).Decode(&clientJ)
 		tokenU := r.URL.Query()["token"][0]
 		if token == tokenU {
-			if passM == passMD {
-				result, _ := db.Exec("delete from clients where sn=$1", snD)
+			if clientJ.Passm == passMD {
+				result, _ := db.Exec("delete from clients where sn=$1", clientJ.Sn)
 				rowsUpdated, _ := result.RowsAffected()
 				fmt.Println(rowsUpdated)
-				http.Redirect(w, r, url+"logged.html", http.StatusSeeOther)
+				json.NewEncoder(w).Encode(clientJ.Sn)
 			} else {
-				http.Redirect(w, r, url+"logged.html?error=wrong-manager-passD", http.StatusSeeOther)
+				json.NewEncoder(w).Encode("BAD MANAGER PASSWORD")
 			}
 		} else {
-			fmt.Fprintf(w, "Bad token verification")
+			fmt.Fprintf(w, "BAD TOKEN VERIFICATION")
 		}
 	}
 }
@@ -107,9 +114,9 @@ func ShowClient(db *sql.DB, token string) http.HandlerFunc {
 			sn := r.URL.Query()["sn"][0]
 			rows := db.QueryRow("select * from clients where sn=$1", sn)
 			rows.Scan(&client.Name, &client.Surname, &client.Sn, &client.RoomNumber, &client.CarID)
-			fmt.Fprintf(w, View.ShowClient(client.Name, client.Surname, client.Sn, client.RoomNumber, client.CarID))
+			json.NewEncoder(w).Encode(client)
 		} else {
-			fmt.Fprintf(w, "Bad token verification")
+			json.NewEncoder(w).Encode("Bad token verification")
 		}
 	}
 }
