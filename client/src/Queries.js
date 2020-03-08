@@ -1,7 +1,7 @@
 var isLogged;
 module.exports = {
     IsLoggedR: function () {
-        document.getElementById("proceedButton").style = "visibility: visible;";
+        document.getElementById("buttonS").innerText = "Click to proceed!";
         return Login()
     }
 };
