@@ -9,7 +9,6 @@ import (
 	"net/http"
 )
 
-
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
@@ -57,7 +56,7 @@ func RegisterClient(db *sql.DB, passM string, token string) http.HandlerFunc {
 				json.NewEncoder(w).Encode("WRONG MANAGER PASSWORD")
 			}
 		} else {
-			fmt.Fprintf(w, "Bad token verification")
+			Model.BadToken(w)
 		}
 	}
 }
@@ -78,7 +77,7 @@ func GetClients(db *sql.DB, token string) http.HandlerFunc {
 			}
 			json.NewEncoder(w).Encode(clients)
 		} else {
-			json.NewEncoder(w).Encode("BAD TOKEN VERIFICATION")
+			Model.BadToken(w)
 		}
 	}
 }
@@ -98,7 +97,7 @@ func DeleteClient(db *sql.DB, passMD string, token string) http.HandlerFunc {
 				json.NewEncoder(w).Encode("BAD MANAGER PASSWORD")
 			}
 		} else {
-			fmt.Fprintf(w, "BAD TOKEN VERIFICATION")
+			Model.BadToken(w)
 		}
 	}
 }
@@ -113,7 +112,7 @@ func ShowClient(db *sql.DB, token string) http.HandlerFunc {
 			rows.Scan(&client.Name, &client.Surname, &client.Sn, &client.RoomNumber, &client.CarID)
 			json.NewEncoder(w).Encode(client)
 		} else {
-			json.NewEncoder(w).Encode("Bad token verification")
+			Model.BadToken(w)
 		}
 	}
 }
